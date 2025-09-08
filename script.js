@@ -65,22 +65,23 @@ function gameState(){
     moveDown();
 }
 
-function collision(x, y){
-    let piece = pieceObj.piece ;
-    for(let i = 0 ; i < piece.length ; i++){
-        for(let j = 0 ; j < piece[i].length ; j++){
-            if(piece[i][j] == 1){
-                let p = j + x ;
-                let q = i + y ;
-                if (p >=0 && p < cols && q >= 0 && q < rows){
+function collision(x, y, testPiece) {
+    let piece = testPiece || pieceObj.piece;
+    for (let i = 0; i < piece.length; i++) {
+        for (let j = 0; j < piece[i].length; j++) {
+            if (piece[i][j] == 1) {
+                let p = j + x;
+                let q = i + y;
+                if (p < 0 || p >= cols || q < 0 || q >= rows) {
+                    return true;
                 }
-                else{
-                    return true ;
+                if (grid[q][p] != 0) {
+                    return true;
                 }
             }
         }
     }
-    return false ;
+    return false;
 }
 
 
@@ -119,6 +120,10 @@ function moveDown(){
                 grid[q][p] = pieceObj.color ;
                 }
             }
+            if (pieceObj.cy == 0){
+                alert("Game Over");
+                grid = generateGrid();
+            }
         }
         pieceObj = null ;
     }
@@ -136,6 +141,29 @@ function moveLeft(){
     
     drawGrid();
     
+}
+
+function rotate(){
+    let piece = pieceObj.piece ;
+    let n = piece.length ;
+    let m = piece[0].length ;
+    let rotatedPiece = [];
+    for(let i = 0 ; i < m ; i++){
+        rotatedPiece.push([]);
+        for(let j = 0 ; j < n ; j++){
+            rotatedPiece[i].push(0);
+        }
+    }
+    for(let i = 0 ; i < n ; i++){
+        for(let j = 0 ; j < m ; j++){
+            rotatedPiece[j][n - 1 - i] = piece[i][j];
+        }
+    }
+    // Only rotate if it doesn't collide
+    if (!collision(pieceObj.cx, pieceObj.cy, rotatedPiece)) {
+        pieceObj.piece = rotatedPiece;
+    }
+    drawGrid();
 }
 
 function generateGrid(){
