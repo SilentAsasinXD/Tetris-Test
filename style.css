@@ -1,9 +1,31 @@
 #tetris {
-    height: 640px;
-    width: 350px;
-    border: 2px solid #000;
-    background-color: #f0f0f0;
+    height: 600px;
+    width: 300px;
+    padding: 0px;
+    box-sizing: border-box;
+    border: 8px solid #0e59b4;
+    background-color: #ffffff;
     display: block;
     margin: 20px auto;
+    
+}
 
+body {
+    background-image: url('images/tetris-bg.webp');
+    background-size: 100% 130%;
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
+    align-items: center;
+    justify-content: space-evenly;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    
+    font-size: 24px;
+    margin-top: 20px;
 }
