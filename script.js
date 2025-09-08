@@ -36,6 +36,7 @@ const Shapes = [
     ]
 ];
 const Colors = [
+    'white',
     'cyan',
     'blue',
     'orange',
@@ -87,7 +88,7 @@ function generateRandomShape(){
     let ran = Math.floor(Math.random() * 7);
     console.log(Shapes[ran]);
     let piece = Shapes[ran];
-    let color = Colors[ran];
+    let color = ran + 1;
     let cx = 4 ;
     cy = 0;
     return {piece, color, cx, cy};
@@ -107,7 +108,20 @@ function showPiece(){
 
 function moveDown(){
     if(!collision(pieceObj.cx , pieceObj.cy + 1))
-    pieceObj.cy += 1 ;
+        pieceObj.cy += 1 ;
+        else{
+            let piece = pieceObj.piece ;
+        for(let i = 0 ; i < piece.length ; i++){
+            for(let j = 0 ; j < piece[i].length ; j++){
+                if(piece[i][j] == 1){
+                let p = pieceObj.cx + j ;
+                let q = pieceObj.cy + i ;
+                grid[q][p] = pieceObj.color ;
+                }
+            }
+        }
+        pieceObj = null ;
+    }
     drawGrid();
 }
 function moveRight(){
@@ -119,32 +133,27 @@ function moveRight(){
 function moveLeft(){
     if(!collision(pieceObj.cx -1 , pieceObj.cy))
     pieceObj.cx -= 1 ;
+    
     drawGrid();
     
 }
-
-// function collision(){
-//     let piece = pieceObj.piece ;
-
-
-
 
 function generateGrid(){
     let grid = [];
     for(let i = 0 ; i < rows ; i++){
         grid.push([]);
         for(let j = 0 ; j < cols ; j++){
-            grid[i].push(i);
+            grid[i].push(0);
         }
     }
     return grid ;
 }
 
 function drawGrid(){
-    for(let r = 0 ; r < grid.length ; r++){
-        for(let c = 0 ; c < grid[r].length ; c++){
-            context.fillStyle = "#F2F2F2";
-            context.fillRect(c, r, 1, 1);
+    for(let i = 0 ; i < grid.length ; i++){
+        for(let j = 0 ; j < grid[i].length ; j++){
+            context.fillStyle = Colors[grid[i][j]] ;
+            context.fillRect(j, i, 1, 1);
         }
     }
     showPiece();
