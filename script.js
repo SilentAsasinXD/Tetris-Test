@@ -88,7 +88,7 @@ function generateRandomShape(){
     let ran = Math.floor(Math.random() * 7);
     console.log(Shapes[ran]);
     let piece = Shapes[ran];
-    let color = ran + 1;
+    let color = ran +1;
     let cx = 4 ;
     cy = 0;
     return {piece, color, cx, cy};
@@ -99,7 +99,7 @@ function showPiece(){
     for(let i = 0 ; i < newPiece.piece.length ; i++){
         for(let j = 0 ; j < newPiece.piece.length ; j++){
             if(newPiece.piece[i][j] == 1){
-                context.fillStyle = newPiece.color;
+                context.fillStyle = Colors[newPiece.color] ;
                 context.fillRect(newPiece.cx + j, newPiece.cy + i, 1, 1);
             }
         }
