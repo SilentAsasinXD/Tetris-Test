@@ -36,7 +36,6 @@ const Shapes = [
     ]
 ];
 const Colors = [
-    'white',
     'cyan',
     'blue',
     'orange',
@@ -65,6 +64,25 @@ function gameState(){
     moveDown();
 }
 
+function collision(x, y){
+    let piece = pieceObj.piece ;
+    for(let i = 0 ; i < piece.length ; i++){
+        for(let j = 0 ; j < piece[i].length ; j++){
+            if(piece[i][j] == 1){
+                let p = j + x ;
+                let q = i + y ;
+                if (p >=0 && p < cols && q >= 0 && q < rows){
+                }
+                else{
+                    return true ;
+                }
+            }
+        }
+    }
+    return false ;
+}
+
+
 function generateRandomShape(){
     let ran = Math.floor(Math.random() * 7);
     console.log(Shapes[ran]);
@@ -88,9 +106,28 @@ function showPiece(){
 }
 
 function moveDown(){
+    if(!collision(pieceObj.cx , pieceObj.cy + 1))
     pieceObj.cy += 1 ;
     drawGrid();
 }
+function moveRight(){
+    if(!collision(pieceObj.cx + 1 , pieceObj.cy))
+    pieceObj.cx += 1 ;
+    drawGrid();
+    
+}
+function moveLeft(){
+    if(!collision(pieceObj.cx -1 , pieceObj.cy))
+    pieceObj.cx -= 1 ;
+    drawGrid();
+    
+}
+
+// function collision(){
+//     let piece = pieceObj.piece ;
+
+
+
 
 function generateGrid(){
     let grid = [];
@@ -112,4 +149,21 @@ function drawGrid(){
     }
     showPiece();
 }
+
+document.addEventListener('keydown', function(e) {
+    console.log(e.key);
+    if(e.key == "ArrowDown"){
+        moveDown();
+    }
+    else if(e.key == "ArrowRight"){
+        moveRight();
+    }
+    else if(e.key == "ArrowLeft"){
+        moveLeft();
+    }
+    else if(e.key == "ArrowUp"){
+        rotate();
+    }
+})
+
 setInterval(gameState,500);
