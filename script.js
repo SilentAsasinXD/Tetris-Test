@@ -51,10 +51,12 @@ const cols = 10 ;
 
 let canvas = document.querySelector('#tetris');
 let context = canvas.getContext("2d");
+let scorebox = document.querySelector('h2');
 context.scale(30, 30);
 
 let pieceObj = null;
 let grid = generateGrid();
+let score = 0 ;
 console.log(pieceObj);
 
 function gameState(){
@@ -63,8 +65,36 @@ function gameState(){
         showPiece();
     }
     moveDown();
+    checkLine();
 }
 
+function checkLine(){
+    let lines = 0 ;
+    for (let i = 0 ; i <grid.length ; i++){
+        for(let j = 0 ; j < grid[i].length ; j++){
+            if(grid[i][j] == 0){
+                break ;
+            }else{
+                if(j == grid[i].length -1){
+                grid.splice(i,1);
+                grid.unshift(new Array(cols).fill(0));
+                lines++;
+            }
+
+        }
+    }
+}
+        if (lines == 1){
+            score += 100 ;
+        }else if(lines == 2){
+            score += 300 ;
+        }else if(lines == 3){
+            score += 500 ;
+        }else if(lines >= 4){
+            score  += 800 ;
+        }
+        scorebox.innerHTML = "Score : " + score ;
+    }
 function collision(x, y, testPiece) {
     let piece = testPiece || pieceObj.piece;
     for (let i = 0; i < piece.length; i++) {
